@@ -10,19 +10,16 @@ import { RkButton, RkCard } from 'react-native-ui-kitten';
 
 
 export default class supertodo extends Component {
+    static navigationOptions = {
+        title: 'SuperTodo',
+    };
     render() {
         return (
-            <RkCard>
-                <View rkCardHeader>
-                    <Text>Header</Text>
-                </View>
-                <View rkCardContent>
-                    <Text> quick brown fox jumps over the lazy dog</Text>
-                </View>
-                <View rkCardFooter>
-                    <Text>Footer</Text>
-                </View>
-            </RkCard>
+            <View style={styles.container}>
+                <Text style={styles.welcome}>Welcome to SuperTodo</Text>
+                <Text style={styles.instructions}> Built with React Native!</Text>
+                <RkButton>Enter</RkButton>
+            </View>
 
         );
     }
