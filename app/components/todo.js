@@ -5,7 +5,7 @@ import {
     View,
     Image
 } from 'react-native';
-import { RkButton, RkTextInput } from 'react-native-ui-kitten';
+import { RkButton, RkTextInput, RkText } from 'react-native-ui-kitten';
 
 
 
@@ -17,12 +17,35 @@ class supertodo extends Component {
             backgroundColor: "#1B5E20"
         }
     };
+    constructor(props) {
+        super(props)
+        this.state = {
+            todo: ""
+        }
+    }
+
     render() {
+        const { todos, onTodoClick, addTodo } = this.props
         return (
             <View style={styles.container}>
-                <RkTextInput label='Name' />
-
-                <RkButton>Add</RkButton>
+                <RkTextInput value={this.state.todo} onChangeText={value => {
+                    this.setState({ todo: value })
+                }} label='Name' />
+                {
+                    todos && todos.length > 0 ?
+                    todos.map((todo, index) => (
+                        <RkText onPress={() => {
+                                onTodoClick(todo.id)
+                        }} style={{
+                                textDecorationLine: todo.completed ? 'line-through' : null
+                        }} key={index}>{todo.text}</RkText>
+                    )) :
+                    <RkText>No Items Yet</RkText>
+                }
+                <RkButton onPress={() => {
+                    addTodo(this.state.todo)
+                    this.setState({ todo: "" })
+                }}>Add</RkButton>
             </View>
 
         );
@@ -30,7 +53,7 @@ class supertodo extends Component {
 }
 
 import { connect } from 'react-redux'
-import { toggleTodo } from '../actions'
+import { toggleTodo, addTodo } from '../actions'
 
 const getVisibleTodos = (todos, filter) => {
     switch (filter) {
@@ -44,6 +67,7 @@ const getVisibleTodos = (todos, filter) => {
 }
 
 const mapStateToProps = state => {
+    console.log("STATE", state);
     return {
         todos: getVisibleTodos(state.todos, state.visibilityFilter)
     }
@@ -53,6 +77,9 @@ const mapDispatchToProps = dispatch => {
     return {
         onTodoClick: id => {
             dispatch(toggleTodo(id))
+        },
+        addTodo: todo => {
+            dispatch(addTodo(todo))
         }
     }
 }
