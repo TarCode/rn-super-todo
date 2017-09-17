@@ -11,7 +11,7 @@ import { RkButton, RkTextInput, RkText } from 'react-native-ui-kitten';
 
 class supertodo extends Component {
     static navigationOptions = {
-        title: 'SuperTodo',
+        title: 'List',
         headerTintColor: '#FFF',
         headerStyle: {
             backgroundColor: "#1B5E20"
@@ -28,24 +28,38 @@ class supertodo extends Component {
         const { todos, onTodoClick, addTodo } = this.props
         return (
             <View style={styles.container}>
-                <RkTextInput value={this.state.todo} onChangeText={value => {
-                    this.setState({ todo: value })
-                }} label='Name' />
-                {
-                    todos && todos.length > 0 ?
-                    todos.map((todo, index) => (
-                        <RkText onPress={() => {
-                                onTodoClick(todo.id)
-                        }} style={{
-                                textDecorationLine: todo.completed ? 'line-through' : null
-                        }} key={index}>{todo.text}</RkText>
-                    )) :
-                    <RkText>No Items Yet</RkText>
-                }
-                <RkButton onPress={() => {
-                    addTodo(this.state.todo)
-                    this.setState({ todo: "" })
-                }}>Add</RkButton>
+                <View style={styles.inputHolder}>
+                    <RkTextInput style={{
+                        width: '50%',
+
+                    }} value={this.state.todo} onChangeText={value => {
+                        this.setState({ todo: value })
+                    }} label='Name' />
+                    <RkButton style={{
+                        backgroundColor: "#FF8F00"
+                    }} onPress={() => {
+                        addTodo(this.state.todo)
+                        this.setState({ todo: "" })
+                    }}>Add</RkButton>
+                </View>
+                <View style={styles.listContainer}>
+                    {
+                        todos && todos.length > 0 ?
+                            todos.map((todo, index) => (
+                                <RkText onPress={() => {
+                                    onTodoClick(todo.id)
+                                }} style={{
+                                    fontSize: 22,
+                                    color: '#fff',
+                                    textDecorationLine: todo.completed ? 'line-through' : null
+                                }} key={index}>{todo.text}</RkText>
+                            )) :
+                            <RkText style={{
+                                fontSize: 22,
+                                color: '#fff'
+                            }}>No Items Yet</RkText>
+                    }
+                </View>
             </View>
 
         );
@@ -94,6 +108,22 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'column',
         padding: 10,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#2E7D32',
+    },
+    inputHolder: {
+        flex: 0.25,
+        flexDirection: 'row',
+        padding: 10,
+        justifyContent: 'space-around',
+        alignItems: 'center',
+        backgroundColor: '#4CAF50',
+        borderRadius: 25
+    },
+    listContainer: {
+        flex: 1,
+        flexDirection: 'column',
         justifyContent: 'space-around',
         alignItems: 'center',
         backgroundColor: '#2E7D32',
