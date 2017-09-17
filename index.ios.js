@@ -6,6 +6,6 @@ import {
   View
 } from 'react-native';
 
-import supertodo from './app/index'
+import App from './app/index'
 
-AppRegistry.registerComponent('supertodo', () => supertodo);
+AppRegistry.registerComponent('supertodo', () => App);

@@ -4,6 +4,8 @@ import {
     Text,
 } from 'react-native';
 import { StackNavigator } from 'react-navigation';
+import { Provider } from 'react-redux'
+
 
 import HomeScreen from './components/home'
 import TodoScreen from './components/todo'
@@ -13,3 +15,6 @@ export default StackNavigator({
     Todo: { screen: TodoScreen }
 });
 
+// export default <Provider store={store}>
+
+// </Provider>
